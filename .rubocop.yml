@@ -1,0 +1,18 @@
+inherit_gem:
+  rubocop-rails:
+    - config/rails.yml
+
+# Commonly used screens these days easily fit more than 80 characters.
+Metrics/LineLength:
+  Max: 120
+
+Style/StringLiterals:
+  EnforcedStyle: single_quotes
+  SupportedStyles:
+    - single_quotes
+    - double_quotes
+
+AllCops:
+  TargetRubyVersion: 2.4
+  Exclude:
+    - 'db/schema.rb'
