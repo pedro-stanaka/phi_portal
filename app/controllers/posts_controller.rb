@@ -1,6 +1,5 @@
 class PostsController < ApplicationController
   def index
-    puts "Test"
-    @posts = Post.all
+    @posts = paginate(Post.all, per_page: 5)
   end
 end
