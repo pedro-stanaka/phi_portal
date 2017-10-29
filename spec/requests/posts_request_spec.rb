@@ -7,7 +7,7 @@ RSpec.describe 'Posts', type: :request do
   let(:headers) { {
       'Accept': 'application/json',
       'Content-Type': 'application/json'
-  } }
+  }}
 
   describe 'GET /posts' do
     before do
@@ -19,10 +19,16 @@ RSpec.describe 'Posts', type: :request do
       end
     end
 
-    it 'returns a list of posts' do
-      get '/posts', headers: headers
+    before { get '/posts', headers: headers }
 
-      expect(json['data'].size).to equal 5
+    it 'returns a list of posts' do
+      expect(json['data']).to be_an_instance_of Array
+    end
+
+    it 'paginates the content' do
+      expect(json['data'].size).to equal(5)
+      expect(response.headers['Per-Page']).to eq('5')
+      expect(response.headers['Total']).to eq('6')
     end
   end
 
