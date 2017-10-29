@@ -14,6 +14,7 @@ jobs:
     environment:
       TEST_DATABASE_URL: postgresql://root@localhost:5432/circle_test
       CC_TEST_REPORTER_ID: 28c2b96545fbe5547c0e4f44e4f7439e1dbf3abceca4e37e965aa49e4f39be09
+      CIRCLE_WORKING_DIRECTORY: ~/phi_portal
 
     steps:
       - checkout
@@ -52,7 +53,8 @@ jobs:
                             --format progress \
                             $(circleci tests glob "spec/**/*_spec.rb" | circleci tests split --split-by=timings)
 
-      - run: ./cc-test-reporter format-coverage -t simplecov $CIRCLE_ARTIFACTS/coverage/.resultset.json
+      - run: ./cc-test-reporter format-coverage -t simplecov $CIRCLE_WORKING_DIRECTORY/coverage/.resultset.json
+      - run: ./cc-test-reporter upload-coverage
 
       # Save test results for timing analysis
       - store_test_results:
