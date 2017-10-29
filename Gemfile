@@ -54,6 +54,7 @@ group :test do
   gem 'faker'
   gem 'database_cleaner'
   gem 'rspec_junit_formatter'
+  gem 'simplecov', require: false
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
