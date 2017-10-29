@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :post do
-    title Faker::HitchhikersGuideToTheGalaxy.quote
+    title 'A New Post'
     body Faker::Lorem.paragraph(2)
   end
 end
