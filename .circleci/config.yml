@@ -1,7 +1,7 @@
 version: 2
 jobs:
   build:
-    parallelism: 3
+    parallelism: 1
     working_directory: ~/circleci-demo-ruby-rails
     docker:
       - image: circleci/ruby:2.4.1-node
@@ -50,7 +50,6 @@ jobs:
                             --format progress \
                             $(circleci tests glob "spec/**/*_spec.rb" | circleci tests split --split-by=timings)
 
-      - run: ls ./coverage
       - run: ./cc-test-reporter format-coverage -t simplecov ./coverage/.resultset.json
       - run: ./cc-test-reporter upload-coverage
 
