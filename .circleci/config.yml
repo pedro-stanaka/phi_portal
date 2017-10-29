@@ -42,9 +42,6 @@ jobs:
       - run: bundle exec rake db:create
       - run: bundle exec rake db:schema:load
 
-      # Run before-test CC preparation
-      - run: ./cc-test-reporter before-build
-
       # Run rspec in parallel
       - run: |
           bundle exec rspec --profile 10 \
@@ -53,7 +50,8 @@ jobs:
                             --format progress \
                             $(circleci tests glob "spec/**/*_spec.rb" | circleci tests split --split-by=timings)
 
-      - run: ./cc-test-reporter format-coverage -t simplecov $CIRCLE_WORKING_DIRECTORY/coverage/.resultset.json
+      - run: ls ./coverage
+      - run: ./cc-test-reporter format-coverage -t simplecov ./coverage/.resultset.json
       - run: ./cc-test-reporter upload-coverage
 
       # Save test results for timing analysis
