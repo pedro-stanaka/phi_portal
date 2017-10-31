@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class PostsController < ApplicationController
-  before_action :find_post, only: [:show, :update]
+  before_action :find_post, only: [:show, :update, :destroy]
 
   def index
     @posts = paginate(Post.all, per_page: 5)
@@ -13,13 +13,18 @@ class PostsController < ApplicationController
   end
 
   def show
-    render 'posts/show', status: :ok
   end
 
   def update
     @post.update!(post_params)
 
     render 'posts/show', status: :ok
+  end
+
+  def destroy
+    @post.destroy!
+
+    render json: { message: I18n.t('posts.deleted') }
   end
 
 private

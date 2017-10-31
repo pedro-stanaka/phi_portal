@@ -92,4 +92,17 @@ RSpec.describe 'Posts', type: :request do
       end
     end
   end
+
+  describe 'DELETE /posts/:id' do
+    context 'when post exists' do
+      let(:post) { create(:post) }
+      before do
+        delete "/posts/#{post.id}", headers: headers
+      end
+
+      it 'should delete a post and return a success message' do
+        expect(json['message']).to eq(I18n.t('posts.deleted'))
+      end
+    end
+  end
 end
