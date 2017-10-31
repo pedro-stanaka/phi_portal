@@ -1,7 +1,7 @@
 version: 2
 jobs:
   build:
-    parallelism: 3
+    parallelism: 1
     working_directory: ~/circleci-demo-ruby-rails
     docker:
       - image: circleci/ruby:2.4.1-node
@@ -13,6 +13,8 @@ jobs:
           - POSTGRES_DB=circle_test
     environment:
       TEST_DATABASE_URL: postgresql://root@localhost:5432/circle_test
+      CC_TEST_REPORTER_ID: 28c2b96545fbe5547c0e4f44e4f7439e1dbf3abceca4e37e965aa49e4f39be09
+      CIRCLE_WORKING_DIRECTORY: ~/phi_portal
 
     steps:
       - checkout
@@ -23,6 +25,10 @@ jobs:
 
       # Bundle install dependencies
       - run: bundle install --path vendor/bundle
+
+      # Install CodeClimate Test Reporter
+      - run: curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+      - run: chmod +x ./cc-test-reporter
 
       # Store bundle cache
       - save_cache:
@@ -44,6 +50,12 @@ jobs:
                             --format progress \
                             $(circleci tests glob "spec/**/*_spec.rb" | circleci tests split --split-by=timings)
 
+      - run: ./cc-test-reporter format-coverage -t simplecov ./coverage/.resultset.json
+      - run: ./cc-test-reporter upload-coverage
+
       # Save test results for timing analysis
       - store_test_results:
           path: test_results
+
+      - store_artifacts:
+          path: $CIRCLE_WORKING_DIRECTORY/coverage

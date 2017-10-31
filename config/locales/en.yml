@@ -31,3 +31,5 @@
 
 en:
   hello: "Hello world"
+  posts:
+    deleted: "The post has been deleted."
