@@ -1,5 +1,9 @@
 # Philanthropic Portal API
 
+[![CircleCI](https://circleci.com/gh/pedro-stanaka/phi_portal/tree/master.svg?style=svg)](https://circleci.com/gh/pedro-stanaka/phi_portal/tree/master)
+[![Maintainability](https://api.codeclimate.com/v1/badges/ce85d886c408d2be7aa5/maintainability)](https://codeclimate.com/github/pedro-stanaka/phi_portal/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/ce85d886c408d2be7aa5/test_coverage)](https://codeclimate.com/github/pedro-stanaka/phi_portal/test_coverage)
+
 [![Join the chat at https://gitter.im/phi_portal/Lobby](https://badges.gitter.im/phi_portal/Lobby.svg)](https://gitter.im/phi_portal/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 This is a generic API for sites of non-profitable organizations which assists locals and 
