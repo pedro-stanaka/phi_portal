@@ -55,4 +55,41 @@ RSpec.describe 'Posts', type: :request do
       end
     end
   end
+
+  describe 'GET /posts/:id' do
+    context 'when post exists' do
+      let(:post) { create(:post) }
+      before { get "/posts/#{post.id}", headers: headers }
+
+      it 'returns a ok code' do
+        expect(response).to have_http_status(:ok)
+      end
+
+      it 'return a post in the body of the response' do
+        expect(json['title']).to eq(post.title)
+      end
+    end
+
+    context 'when post does not exist' do
+      before { get '/posts/1', headers: headers }
+
+      it 'should return an error message' do
+        expect(json['message']).to match(/Couldn't find Post with 'id'=1/)
+      end
+    end
+  end
+
+  describe 'PUT /posts/:id' do
+    context 'when post exists' do
+      let(:post) { create(:post) }
+      before do
+        post.title = 'New title'
+        put "/posts/#{post.id}", params: post.to_json, headers: headers
+      end
+
+      it 'should return a post with modified attributes' do
+        expect(json['title']).to match(/New title/)
+      end
+    end
+  end
 end
